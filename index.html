@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RISER Hub — UNSW Canberra</title>
+<style>
+  :root{
+    --bg:#07100e;
+    --bg-2:#0a1512;
+    --panel:#0e1b17;
+    --panel-2:#13221d;
+    --text:#f4f7f3;
+    --muted:#a8b7b0;
+    --line:rgba(255,255,255,.09);
+    --yellow:#ffda00;
+    --mint:#6ee7b7;
+    --cyan:#7dd3fc;
+    --white:#fff;
+    --shadow:0 28px 80px rgba(0,0,0,.32);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(110,231,183,.08), transparent 24%),
+      radial-gradient(circle at 85% 5%, rgba(125,211,252,.08), transparent 24%),
+      var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  .wrap{width:min(1180px, calc(100% - 40px));margin:0 auto}
+
+  .site-header{
+    position:fixed;inset:0 0 auto 0;z-index:50;
+    backdrop-filter:blur(18px);
+    background:rgba(7,16,14,.68);
+    border-bottom:1px solid rgba(255,255,255,.07);
+  }
+  .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;align-items:center;gap:16px;min-width:max-content}
+  .unsw-mark{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:52px;height:52px;background:var(--yellow);color:#111;font-weight:900;letter-spacing:-.02em;
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.05}
+  .brand-text strong{font-size:15px;letter-spacing:.02em}
+  .brand-text span{font-size:11px;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:.14em}
+  .nav-links{display:flex;gap:24px;align-items:center;font-size:14px;color:#d9e1dd}
+  .nav-links a{transition:.25s ease}
+  .nav-links a:hover{color:var(--yellow)}
+  .nav-cta{padding:11px 15px;border:1px solid rgba(255,218,0,.38);border-radius:999px}
+
+  .hero {
+  min-height: 760px;
+  padding: 152px 0 92px;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+
+  background-image: url("images/cover.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:54px 54px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 80%);
+  }
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.02fr .98fr;gap:70px;align-items:center}
+  .eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#cbd7d2;margin-bottom:18px;font-weight:700}
+  .hero h1{font-size:clamp(54px,7vw,96px);line-height:.94;letter-spacing:-.055em;margin:0;max-width:780px}
+  .hero h1 em{font-family:Georgia, "Times New Roman", serif;font-weight:400;color:var(--mint)}
+  .hero-copy{max-width:670px;font-size:19px;line-height:1.65;color:#b7c5bf;margin:30px 0 0}
+  .hero-actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;font-size:14px;font-weight:700;transition:.25s ease}
+  .btn-primary{background:var(--yellow);color:#151515}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(255,218,0,.18)}
+  .btn-ghost{border:1px solid rgba(255,255,255,.14);color:#e9efec;background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{border-color:rgba(110,231,183,.45);transform:translateY(-2px)}
+
+  .hero-visual{position:relative;height:540px}
+  .energy-frame{
+    position:absolute;inset:20px;border:1px solid rgba(255,255,255,.1);border-radius:34px;
+    background:
+      linear-gradient(135deg, rgba(110,231,183,.08), transparent 32%),
+      radial-gradient(circle at 70% 30%, rgba(125,211,252,.14), transparent 22%),
+      #0b1714;
+    overflow:hidden;box-shadow:var(--shadow);
+  }
+  .energy-frame::after{
+    content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,16,14,.45),transparent 45%);pointer-events:none;
+  }
+  .energy-img{position:absolute;inset:0;opacity:.5;filter:saturate(.75) contrast(1.06)}
+  .energy-img img{object-position:center}
+  .overlay-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:42px 42px}
+  .node{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(110,231,183,.45);animation:pulse 2.4s infinite}
+  .node:nth-child(2){left:28%;top:27%;animation-delay:.3s}.node:nth-child(3){left:68%;top:20%;animation-delay:.8s}.node:nth-child(4){left:74%;top:62%;animation-delay:1.2s}.node:nth-child(5){left:34%;top:69%;animation-delay:1.6s}.node:nth-child(6){left:52%;top:45%;animation-delay:2s}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(110,231,183,.45)}70%{box-shadow:0 0 0 18px rgba(110,231,183,0)}100%{box-shadow:0 0 0 0 rgba(110,231,183,0)}}
+  .energy-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:280px;height:280px;border:1px solid rgba(255,255,255,.15);border-radius:50%;animation:spin 16s linear infinite}
+  .energy-ring::before,.energy-ring::after{content:"";position:absolute;border-radius:50%;border:1px dashed rgba(125,211,252,.22);inset:28px}.energy-ring::after{inset:72px;border-color:rgba(255,218,0,.16)}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .data-card{position:absolute;right:0;bottom:26px;width:220px;padding:18px;border-radius:20px;background:rgba(10,21,18,.88);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);z-index:5;box-shadow:var(--shadow)}
+  .data-card small{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.14em}
+  .data-row{display:flex;justify-content:space-between;align-items:end;margin-top:14px}
+  .data-row strong{font-size:30px}.data-row span{font-size:12px;color:var(--mint)}
+  .spark{display:flex;gap:4px;align-items:end;height:34px;margin-top:14px}.spark i{display:block;width:8px;background:linear-gradient(var(--mint),rgba(110,231,183,.18));border-radius:3px}.spark i:nth-child(1){height:28%}.spark i:nth-child(2){height:46%}.spark i:nth-child(3){height:34%}.spark i:nth-child(4){height:60%}.spark i:nth-child(5){height:72%}.spark i:nth-child(6){height:52%}.spark i:nth-child(7){height:82%}.spark i:nth-child(8){height:66%}.spark i:nth-child(9){height:94%}
+
+  section{padding:110px 0}
+  .section-kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);font-weight:800;margin-bottom:12px}
+  .section-title{font-size:clamp(38px,5vw,64px);letter-spacing:-.045em;line-height:1;margin:0}
+  .section-desc{font-size:18px;line-height:1.65;color:var(--muted);max-width:720px;margin-top:20px}
+
+  .about{background:linear-gradient(to bottom,rgba(255,255,255,.01),rgba(255,255,255,.025));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:center}
+  .about-panel{padding:34px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));border-radius:28px;position:relative;overflow:hidden}
+  .about-panel::before{content:"";position:absolute;inset:auto -10% -35% auto;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,218,0,.16),transparent 68%)}
+  .about-panel p{margin:0;color:#c3cec9;line-height:1.8;font-size:17px;position:relative;z-index:2}
+  .about-link{display:inline-flex;align-items:center;gap:10px;margin-top:24px;font-weight:750;color:var(--white)}
+  .about-link span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--yellow);color:#111}
+
+  .explore-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:40px}
+  .explore-note{max-width:470px;color:var(--muted);line-height:1.6}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .flip-card{height:340px;perspective:1500px}
+  .flip-inner{position:relative;width:100%;height:100%;transition:transform .72s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+  .flip-card:hover .flip-inner{transform:rotateY(180deg)}
+  .card-face{position:absolute;inset:0;border-radius:28px;overflow:hidden;backface-visibility:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 50px rgba(0,0,0,.22)}
+  .card-front::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,16,14,.92),rgba(7,16,14,.15) 58%,rgba(7,16,14,.04));}
+  .card-front img{transition:transform .7s ease,filter .7s ease;filter:saturate(.85) contrast(1.05)}
+  .flip-card:hover .card-front img{transform:scale(1.05)}
+  .card-label{position:absolute;left:24px;right:24px;bottom:24px;z-index:3}
+  .card-label small{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#d7e2dc}
+  .card-label h3{font-size:28px;line-height:1.05;margin:8px 0 0;letter-spacing:-.03em}
+  .card-back{transform:rotateY(180deg);padding:28px;background:linear-gradient(145deg,#12251f,#0c1714);display:flex;flex-direction:column;justify-content:space-between}
+  .card-back::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 18%,rgba(110,231,183,.12),transparent 28%);pointer-events:none}
+  .card-back h3{font-size:27px;margin:0 0 18px;letter-spacing:-.03em}
+  .card-back ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  .card-back li{display:flex;align-items:center;gap:10px;color:#d6dfdb;font-size:16px}
+  .card-back li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 5px rgba(255,218,0,.08)}
+  .card-cta{display:flex;align-items:center;justify-content:space-between;padding-top:22px;border-top:1px solid rgba(255,255,255,.09);font-size:14px;font-weight:750;color:var(--white)}
+  .card-cta b{color:var(--yellow);font-size:18px}
+
+  .collab{padding-top:70px}
+  .collab-box{position:relative;overflow:hidden;border-radius:34px;padding:58px;background:linear-gradient(125deg,#f6d900 0%,#ffeb6c 48%,#d7ffef 120%);color:#111;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+  .collab-box::after{content:"";position:absolute;width:370px;height:370px;border:1px solid rgba(0,0,0,.13);border-radius:50%;right:-80px;top:-140px;box-shadow:0 0 0 52px rgba(0,0,0,.04),0 0 0 104px rgba(0,0,0,.025)}
+  .collab-box h2{font-size:clamp(36px,5vw,60px);line-height:.98;letter-spacing:-.045em;margin:0;position:relative;z-index:2}
+  .collab-box p{font-size:17px;line-height:1.65;margin:18px 0 0;max-width:700px;position:relative;z-index:2}
+  .collab-action{display:flex;justify-content:flex-end;position:relative;z-index:2}
+  .dark-btn{background:#111;color:#fff;padding:15px 20px;border-radius:999px;font-weight:800;display:inline-flex;align-items:center;gap:12px}
+
+  footer{padding:68px 0 34px;border-top:1px solid var(--line);margin-top:110px;background:#050b09}
+  .footer-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:50px}
+  .footer-title{font-size:22px;font-weight:850;margin-bottom:12px}.footer-copy{color:var(--muted);line-height:1.7;max-width:340px}
+  .footer-col h4{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#dce5e1;margin:0 0 18px}.footer-col a{display:block;color:var(--muted);margin:10px 0;font-size:14px}.footer-col a:hover{color:var(--yellow)}
+  .footer-bottom{display:flex;justify-content:space-between;gap:20px;align-items:center;padding-top:30px;margin-top:40px;border-top:1px solid var(--line);font-size:12px;color:#7f8e87}
+
+  @media (max-width:980px){
+    .nav-links{display:none}.hero-grid,.about-grid,.collab-box{grid-template-columns:1fr}.hero-visual{height:460px}.cards{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr 1fr}.collab-action{justify-content:flex-start}.explore-head{align-items:start;flex-direction:column}
+  }
+  @media (max-width:640px){
+    .wrap{width:min(100% - 24px,1180px)}.hero{padding-top:130px}.hero h1{font-size:52px}.hero-copy{font-size:17px}.hero-visual{height:390px}.data-card{width:190px}.cards{grid-template-columns:1fr}.flip-card{height:320px}.about-grid{gap:34px}.collab-box{padding:34px}.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav">
+    <div class="brand">
+      <!-- <div class="unsw-mark">UNSW</div> -->
+      <div class="brand-text"><strong>RISER Hub</strong><span>UNSW Canberra</span></div>
+    </div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#explore">Explore RISER</a>
+      <a href="#collaborate">Partnerships</a>
+      <a href="#footer">Contact</a>
+      <a class="nav-cta" href="#collaborate">Work with us</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-overlay"></div>
+
+  <div class="wrap hero-content">
+    <div class="hero-text">
+      <div class="eyebrow">
+        Resilient Intelligent Systems for Clean Energy Research
+      </div>
+
+      <h1>
+        Intelligence for the <em>energy systems</em> that come next.
+      </h1>
+
+      <p class="hero-copy">
+        RISER brings together intelligent systems, optimisation and clean-energy
+        research to help shape more adaptive, resilient and sustainable energy
+        infrastructure.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#explore">
+          Explore RISER <span>↗</span>
+        </a>
+
+        <a class="btn btn-ghost" href="#about">
+          About the Hub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="section-kicker">About RISER</div>
+      <h2 class="section-title">Research built around the future of energy.</h2>
+      <p class="section-desc"></p>
+    </div>
+    <div class="about-panel">
+      <p>The Resilient Intelligent Systems for Clean Energy Research (RISER) Hub at UNSW Canberra brings together multidisciplinary expertise across intelligent systems, optimisation and clean-energy technologies. The Hub focuses on research that can support more adaptive, reliable and sustainable energy systems, while strengthening collaboration across academia, industry and government.</p>
+      <a class="about-link" href="#">Discover more about RISER <span>↗</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="explore">
+  <div class="wrap">
+    <div class="explore-head">
+      <div>
+        <div class="section-kicker">Explore RISER</div>
+        <h2 class="section-title"></h2>
+      </div>
+      <p class="explore-note"></p>
+    </div>
+
+    <div class="cards">
+      <article class="flip-card"><div class="flip-inner">
+        <div class="card-face card-front"><img alt="Our Research" src="images/research.png"><div class="card-label"><small>01</small><h3>Our Research</h3></div></div>
+        <div class="card-face card-back"><div><h3>Our Research</h3><ul><li>Research Themes</li><li>Research Areas</li></ul></div><div class="card-cta">Explore our research <b>↗</b></div></div>
+      </div></article>
+
+      <article class="flip-card"><div class="flip-inner">
+        <div class="card-face card-front"><img alt="Projects and Impact" src="images/projects.png"><div class="card-label"><small>02</small><h3>Projects &amp; Impact</h3></div></div>
+        <div class="card-face card-back"><div><h3>Projects &amp; Impact</h3><ul><li>Current Projects</li><li>Completed Projects</li><li>Research Impact</li></ul></div><div class="card-cta">Discover our projects <b>↗</b></div></div>
+      </div></article>
+
+      <article class="flip-card"><div class="flip-inner">
+        <div class="card-face card-front"><img alt="Our People" src="images/people.png"><div class="card-label"><small>03</small><h3>Our People</h3></div></div>
+        <div class="card-face card-back"><div><h3>Our People</h3><ul><li>Leadership</li><li>Researchers</li><li>Students &amp; Affiliates</li></ul></div><div class="card-cta">Meet our people <b>↗</b></div></div>
+      </div></article>
+
+      <article class="flip-card"><div class="flip-inner">
+        <div class="card-face card-front"><img alt="Partnerships and Engagement" src="images/partnerships.png"><div class="card-label"><small>04</small><h3>Partnerships &amp; Engagement</h3></div></div>
+        <div class="card-face card-back"><div><h3>Partnerships &amp; Engagement</h3><ul><li>Industry</li><li>Government</li><li>Academic Collaboration</li><li>Work With Us</li></ul></div><div class="card-cta">Partner with RISER <b>↗</b></div></div>
+      </div></article>
+
+      <article class="flip-card"><div class="flip-inner">
+        <div class="card-face card-front"><img alt="Publications" src="images/publications.png"><div class="card-label"><small>05</small><h3>Publications</h3></div></div>
+        <div class="card-face card-back"><div><h3>Publications</h3><ul><li>Featured Publications</li><li>Recent Publications</li><li>Browse All Publications</li></ul></div><div class="card-cta">Explore publications <b>↗</b></div></div>
+      </div></article>
+
+      <article class="flip-card"><div class="flip-inner">
+        <div class="card-face card-front"><img alt="News and Events" src="images/news.png"><div class="card-label"><small>06</small><h3>News &amp; Events</h3></div></div>
+        <div class="card-face card-back"><div><h3>News &amp; Events</h3><ul><li>News</li><li>Events</li></ul></div><div class="card-cta">Latest from RISER <b>↗</b></div></div>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section class="collab" id="collaborate">
+  <div class="wrap">
+    <div class="collab-box">
+      <div>
+        <h2>Let’s build the future of energy together.</h2>
+        <p>Interested in collaborating with RISER, exploring a research partnership, or connecting with the Hub? We welcome conversations with industry, government and research organisations.</p>
+      </div>
+      <div class="collab-action"><a class="dark-btn" href="#footer">Get in touch <span>↗</span></a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-title">RISER Hub</div>
+        <div class="footer-copy">Resilient Intelligent Systems for Clean Energy Research at UNSW Canberra.</div>
+      </div>
+      <div class="footer-col"><h4>Explore</h4><a href="#">Our Research</a><a href="#">Projects &amp; Impact</a><a href="#">Our People</a><a href="#">Publications</a></div>
+      <div class="footer-col"><h4>Connect</h4><a href="#">Partnerships &amp; Engagement</a><a href="#">News &amp; Events</a><a href="#">Contact RISER</a></div>
+      <div class="footer-col"><h4>UNSW</h4><a href="#">UNSW Canberra</a><a href="#">UNSW Research</a><a href="#">Accessibility</a><a href="#">Privacy</a></div>
+    </div>
+    <div class="footer-bottom"><span>Concept homepage for RISER Hub</span><span>UNSW Canberra</span></div>
+  </div>
+</footer>
+</body>
+</html>
