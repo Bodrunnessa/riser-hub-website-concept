@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How RISER Works | RISER Hub</title>
+<style>
+:root{
+  --bg:#f5f7f4;
+  --panel:#ffffff;
+  --ink:#121714;
+  --muted:#5f6963;
+  --line:#dce3de;
+  --yellow:#f5c84c;
+  --green:#2f7d6d;
+  --green-soft:#dcebe5;
+  --shadow:0 22px 55px rgba(23,39,31,.10);
+  --max:1180px;
+  --radius:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+a{color:inherit}
+.hero{position:relative;overflow:hidden;padding:92px 24px 58px;background:radial-gradient(circle at 13% 18%,rgba(245,200,76,.25),transparent 28%),radial-gradient(circle at 88% 22%,rgba(47,125,109,.16),transparent 33%),linear-gradient(180deg,#fff 0%,#f5f7f4 100%)}
+.hero-inner{max-width:var(--max);margin:auto}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.82rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#2c463d}
+.eyebrow:before{content:"";width:28px;height:3px;border-radius:99px;background:var(--yellow)}
+h1{font-size:clamp(3.2rem,7vw,6.4rem);line-height:.94;letter-spacing:-.06em;margin:20px 0 26px}
+.hero p{max-width:760px;margin:0;color:#4f5b54;font-size:clamp(1.08rem,1.6vw,1.27rem)}
+
+.journey-wrap{position:sticky;top:0;z-index:50;background:rgba(245,247,244,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(18,23,20,.08)}
+.journey{max-width:var(--max);margin:auto;padding:14px 24px 12px;overflow-x:auto;scrollbar-width:none}
+.journey::-webkit-scrollbar{display:none}
+.track{--progress:0%;position:relative;display:grid;grid-template-columns:repeat(7,minmax(108px,1fr));min-width:850px}
+.track:before{content:"";position:absolute;left:7%;right:7%;top:18px;height:2px;background:#cfd7d2;z-index:0}
+.track:after{content:"";position:absolute;left:7%;top:18px;width:var(--progress);height:2px;background:var(--green);z-index:1;transition:width .3s ease}
+.step-link{position:relative;z-index:2;text-align:center;text-decoration:none;color:#7d8781;font-size:.82rem;font-weight:700;transition:.25s ease}
+.dot{width:36px;height:36px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:2px solid #cfd7d2;transition:.3s ease;font-size:.76rem}
+.step-link.active{color:var(--ink)}
+.step-link.active .dot{background:var(--yellow);border-color:var(--yellow);transform:scale(1.08);box-shadow:0 0 0 7px rgba(245,200,76,.18)}
+.step-link.passed .dot{background:var(--green);border-color:var(--green);color:#fff}
+
+main{max-width:var(--max);margin:auto;padding:44px 24px 90px}
+.stage{scroll-margin-top:102px;min-height:70vh;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:84px 0;border-bottom:1px solid var(--line)}
+.stage:nth-of-type(even) .visual{order:2}.stage:nth-of-type(even) .copy{order:1}
+.num{font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+.stage h2{font-size:clamp(2.6rem,4.7vw,4.9rem);line-height:.98;letter-spacing:-.055em;margin:0 0 22px}
+.copy p{color:#56615b;font-size:1.08rem;max-width:650px;margin:0 0 16px}
+.visual{position:relative;min-height:420px;border-radius:var(--radius);background:linear-gradient(145deg,#fff,#edf2ef);box-shadow:var(--shadow);overflow:hidden;border:1px solid #e3e9e5;display:grid;place-items:center}
+.visual:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(245,200,76,.18);filter:blur(12px);top:-72px;right:-60px}
+.visual:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(47,125,109,.13);filter:blur(20px);bottom:-88px;left:-68px}
+.visual svg{width:82%;max-width:500px;height:auto;position:relative;z-index:2}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-origin:center}.float{animation:float 3s ease-in-out infinite}.flow{stroke-dasharray:8 12;animation:dash 2s linear infinite}.spin{animation:spin 9s linear infinite;transform-origin:center}.blink{animation:blink 2s ease-in-out infinite}.grow{animation:grow 2.8s ease-in-out infinite;transform-origin:bottom}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.82}50%{transform:scale(1.12);opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes dash{to{stroke-dashoffset:-40}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes grow{0%,100%{transform:scaleY(.64)}50%{transform:scaleY(1)}}
+footer{max-width:var(--max);margin:auto;padding:0 24px 50px;color:#7b8580;font-size:.9rem}
+@media(max-width:900px){.stage{grid-template-columns:1fr}.hero{padding-top:68px}.stage{gap:32px;padding:62px 0;min-height:auto}.stage:nth-of-type(even) .visual,.stage:nth-of-type(even) .copy{order:initial}.visual{min-height:320px}}
+@media(max-width:560px){.hero{padding-left:18px;padding-right:18px}.journey{padding-left:14px;padding-right:14px}main{padding-left:18px;padding-right:18px}.visual{min-height:280px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">RISER Hub</div>
+      <h1>How RISER Works</h1>
+      <p>Our work connects the full journey from understanding a problem to developing, testing and translating solutions that can support practical outcomes.</p>
+    </div>
+  </div>
+</header>
+
+<nav class="journey-wrap" aria-label="RISER process">
+  <div class="journey">
+    <div class="track" id="track">
+      <a class="step-link active" href="#challenge" data-step="0"><span class="dot">1</span>Challenge</a>
+      <a class="step-link" href="#observe" data-step="1"><span class="dot">2</span>Observe</a>
+      <a class="step-link" href="#understand" data-step="2"><span class="dot">3</span>Understand</a>
+      <a class="step-link" href="#optimise" data-step="3"><span class="dot">4</span>Optimise</a>
+      <a class="step-link" href="#test" data-step="4"><span class="dot">5</span>Test</a>
+      <a class="step-link" href="#translate" data-step="5"><span class="dot">6</span>Translate</a>
+      <a class="step-link" href="#impact" data-step="6"><span class="dot">7</span>Impact</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="stage" id="challenge" data-index="0">
+    <div class="visual">
+      <svg viewBox="0 0 520 360" aria-label="Challenge illustration">
+        <rect x="72" y="92" width="376" height="184" rx="28" fill="#fff" stroke="#d8e0db" stroke-width="2"/>
+        <path d="M108 235 C155 180,205 258,255 194 S356 137,414 194" fill="none" stroke="#2f7d6d" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="108" cy="235" r="10" fill="#2f7d6d"/><circle cx="255" cy="194" r="10" fill="#2f7d6d"/><circle cx="414" cy="194" r="10" fill="#2f7d6d"/>
+        <g class="pulse"><circle cx="378" cy="114" r="34" fill="#f5c84c"/><path d="M378 93v22M378 128v3" stroke="#111713" stroke-width="8" stroke-linecap="round"/></g>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="num">01 · Challenge</div>
+      <h2>Challenge</h2>
+      <p>Every RISER project starts with a real research, industry or operational challenge.</p>
+      <p>We work with partners to define the problem, understand the requirements and identify the expertise needed to address it.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="observe" data-index="1">
+    <div class="visual">
+      <svg viewBox="0 0 520 360" aria-label="Observe illustration">
+        <rect x="86" y="84" width="105" height="192" rx="20" fill="#fff" stroke="#d7dfda" stroke-width="2"/>
+        <rect x="329" y="84" width="105" height="192" rx="20" fill="#fff" stroke="#d7dfda" stroke-width="2"/>
+        <circle cx="138" cy="140" r="24" fill="#2f7d6d" class="pulse"/><circle cx="382" cy="206" r="24" fill="#f5c84c" class="pulse"/>
+        <path d="M184 177 C240 132,285 132,337 177" fill="none" stroke="#2f7d6d" stroke-width="5" class="flow"/>
+        <path d="M184 222 C240 268,285 268,337 222" fill="none" stroke="#7cae9e" stroke-width="5" class="flow"/>
+        <g class="float"><rect x="218" y="151" width="84" height="98" rx="18" fill="#111713"/><circle cx="260" cy="181" r="9" fill="#f5c84c"/><path d="M239 213h42" stroke="#fff" stroke-width="7" stroke-linecap="round"/></g>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="num">02 · Observe</div>
+      <h2>Observe</h2>
+      <p>We bring together the data needed to understand the system and its current condition.</p>
+      <p>Sensor data, asset measurements, battery-management information, operational data and market signals provide the foundation for deeper analysis.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="understand" data-index="2">
+    <div class="visual">
+      <svg viewBox="0 0 520 360" aria-label="Understand illustration">
+        <circle cx="258" cy="180" r="112" fill="#fff" stroke="#d8e0db" stroke-width="2"/>
+        <g class="spin"><circle cx="258" cy="68" r="10" fill="#2f7d6d"/><circle cx="370" cy="180" r="10" fill="#f5c84c"/><circle cx="258" cy="292" r="10" fill="#2f7d6d"/><circle cx="146" cy="180" r="10" fill="#f5c84c"/></g>
+        <path d="M174 224 C205 203,221 215,244 184 S294 139,338 150" fill="none" stroke="#2f7d6d" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="244" cy="184" r="12" fill="#f5c84c" class="blink"/>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="num">03 · Understand</div>
+      <h2>Understand</h2>
+      <p>We turn data into insight.</p>
+      <p>Using analytics, modelling, simulation and AI, RISER identifies patterns, risks, anomalies and opportunities for improvement.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="optimise" data-index="3">
+    <div class="visual">
+      <svg viewBox="0 0 520 360" aria-label="Optimise illustration">
+        <circle cx="105" cy="180" r="18" fill="#111713"/>
+        <path d="M123 180 C190 180,190 104,259 104" fill="none" stroke="#c8d3cd" stroke-width="6"/>
+        <path d="M123 180 C190 180,190 180,259 180" fill="none" stroke="#2f7d6d" stroke-width="11" stroke-linecap="round"/>
+        <path d="M123 180 C190 180,190 256,259 256" fill="none" stroke="#c8d3cd" stroke-width="6"/>
+        <path d="M259 180 C328 180,329 180,414 180" fill="none" stroke="#2f7d6d" stroke-width="11" stroke-linecap="round" class="flow"/>
+        <circle cx="276" cy="180" r="24" fill="#f5c84c" class="pulse"/><circle cx="427" cy="180" r="22" fill="#111713"/>
+        <path d="M419 180l7 7 13-16" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="num">04 · Optimise</div>
+      <h2>Optimise</h2>
+      <p>We develop better ways to operate, manage and make decisions.</p>
+      <p>Optimisation, intelligent control and decision-support methods help identify strategies that improve efficiency, reliability, resilience and overall system performance.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="test" data-index="4">
+    <div class="visual">
+      <svg viewBox="0 0 520 360" aria-label="Test illustration">
+        <rect x="130" y="88" width="260" height="184" rx="26" fill="#fff" stroke="#d8e0db" stroke-width="2"/>
+        <rect x="178" y="126" width="164" height="108" rx="18" fill="#edf3ef"/>
+        <rect x="209" y="150" width="102" height="58" rx="11" fill="#111713"/>
+        <rect x="220" y="160" width="55" height="38" rx="7" fill="#2f7d6d" class="grow"/>
+        <path d="M147 303h225" stroke="#2f7d6d" stroke-width="6" stroke-linecap="round" class="flow"/>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="num">05 · Test</div>
+      <h2>Test</h2>
+      <p>We evaluate promising solutions under realistic conditions.</p>
+      <p>Simulation, computational analysis, laboratory testing and experimental validation help assess performance, identify limitations and refine the solution.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="translate" data-index="5">
+    <div class="visual">
+      <svg viewBox="0 0 520 360" aria-label="Translate illustration">
+        <rect x="92" y="107" width="120" height="146" rx="20" fill="#111713"/>
+        <rect x="119" y="137" width="66" height="10" rx="5" fill="#f5c84c"/><rect x="119" y="163" width="54" height="10" rx="5" fill="#72847b"/><rect x="119" y="189" width="70" height="10" rx="5" fill="#72847b"/>
+        <path d="M224 180h76" stroke="#2f7d6d" stroke-width="8" stroke-linecap="round" class="flow"/><path d="M282 159l24 21-24 21" fill="none" stroke="#2f7d6d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <g class="float"><rect x="318" y="127" width="110" height="126" rx="16" fill="#fff" stroke="#d8e0db" stroke-width="2"/><path d="M341 222v-51h18v51M373 222v-78h18v78M405 222v-35h18v35" stroke="#2f7d6d" stroke-width="7"/><path d="M341 151h82" stroke="#f5c84c" stroke-width="8" stroke-linecap="round"/></g>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="num">06 · Translate</div>
+      <h2>Translate</h2>
+      <p>We turn research outcomes into practical tools, methods and solutions.</p>
+      <p>Depending on the project, these outcomes can take the form of prototypes, analytical platforms, demonstrations, technical methods, decision-support tools and knowledge transfer.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="impact" data-index="6">
+    <div class="visual">
+      <svg viewBox="0 0 520 360" aria-label="Impact illustration">
+        <circle cx="260" cy="180" r="118" fill="#fff" stroke="#d8e0db" stroke-width="2"/>
+        <circle cx="260" cy="180" r="64" fill="#2f7d6d"/>
+        <path d="M260 133v95M222 179h76" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+        <g class="pulse"><circle cx="260" cy="47" r="26" fill="#f5c84c"/></g>
+        <path d="M260 76v24M260 260v24M141 180h31M348 180h31M176 96l22 22M322 242l22 22M176 264l22-22M322 118l22-22" stroke="#7cae9e" stroke-width="7" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="num">07 · Impact</div>
+      <h2>Impact</h2>
+      <p>The goal is meaningful, real-world impact.</p>
+      <p>RISER research supports safer batteries, smarter energy systems, stronger resilience, better decisions and more sustainable energy pathways.</p>
+    </div>
+  </section>
+</main>
+<script>
+const sections=[...document.querySelectorAll('.stage')];
+const links=[...document.querySelectorAll('.step-link')];
+const track=document.getElementById('track');
+function setActive(index){
+  links.forEach((link,i)=>{link.classList.toggle('active',i===index);link.classList.toggle('passed',i<index)});
+  track.style.setProperty('--progress',((index/(links.length-1))*86)+'%');
+  links[index]?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+}
+const observer=new IntersectionObserver(entries=>{
+  const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+  if(visible) setActive(Number(visible.target.dataset.index));
+},{rootMargin:'-24% 0px -45% 0px',threshold:[.15,.35,.55]});
+sections.forEach(s=>observer.observe(s));
+links.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();document.querySelector(link.getAttribute('href')).scrollIntoView({behavior:'smooth'})}));
+</script>
+</body>
+</html>
